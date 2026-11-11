@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Результаты замеров</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h2>Результаты замеров</h2>
+<p><b>Важно:</b> открытые DevTools со Slow 3G(теперь называется в Google Chrome) и «Disable cache» держить открытыми во время серии. Серия идёт в этой же вкладке и занимает несколько минут.</p>
+<p>Замеры сохраняются автоматически при каждой загрузке <code>index.html</code> / <code>index_jquery.html</code></p>
+<div>
+  <button id="cj">Копировать jQuery → ячейки C6:G11</button>
+  <button id="cv">Копировать без jQuery → ячейки I6:M11</button>
+  <button id="csv">Скачать CSV для Excel</button>
+  <button id="clr">Очистить журнал</button>
+  <br><button id="ser">Запустить серию: все размеры × 5 раз × 2 варианта</button>
+</div>
+<div id="tbl"></div>
+<div id="chart"></div>
+<script>
+// ===PURE===
+var NS = [10, 25, 50, 100, 150, 200], RUNS = 5, VARS = ['jQuery', 'Vanilla'];
+function readLog() { try { return JSON.parse(localStorage.getItem('runs') || '[]'); } catch (e) { return []; } }
+function runsOf(log, v, n) { return log.filter(function (r) { return r.variant === v && r.n === n; }).map(function (r) { return Math.round(r.ms); }).slice(-RUNS); }
+function avg(a) { return a.length ? Math.round(a.reduce(function (s, x) { return s + x; }, 0) / a.length) : ''; }
+function allNs(log) {
+  var s = NS.slice();
+  log.forEach(function (r) { if (s.indexOf(r.n) < 0) s.push(r.n); });
+  return s.sort(function (a, b) { return a - b; });
+}
+function matrix(log, v, ns) {
+  return ns.map(function (n) { var r = runsOf(log, v, n); while (r.length < RUNS) r.push(''); return r; });
+}
+function tsv(m) { return m.map(function (r) { return r.join('\t'); }).join('\n'); }
+function csv(log, ns) {
+  var head = ['Новостей'];
+  VARS.forEach(function (v) { for (var i = 1; i <= RUNS; i++) head.push(v + ' #' + i); });
+  var mj = matrix(log, VARS[0], ns), mv = matrix(log, VARS[1], ns);
+  var lines = [head.join(';')];
+  ns.forEach(function (n, i) { lines.push([n].concat(mj[i], mv[i]).join(';')); });
+  return '\ufeff' + lines.join('\r\n');
+}
+// ===END===
+
+function msg(t) { var m = document.getElementById('msg'); m.textContent = t; setTimeout(function () { m.textContent = ''; }, 2500); }
+function copyText(t) {
+  function fallback() {
+    var a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select();
+    try { document.execCommand('copy'); msg('Скопировано'); } catch (e) { msg('Не удалось скопировать'); }
+    document.body.removeChild(a);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { msg('Скопировано'); }, fallback);
+  else fallback();
+}
+function render() {
+  var log = readLog(), ns = allNs(log), h = '<table><tr><th rowspan="2">Новостей</th>';
+  VARS.forEach(function (v) { h += '<th colspan="' + (RUNS + 1) + '">' + (v === 'Vanilla' ? 'Без jQuery' : v) + ', мс</th>'; });
+  h += '</tr><tr>';
+  VARS.forEach(function () { for (var i = 1; i <= RUNS; i++) h += '<th>#' + i + '</th>'; h += '<th>среднее</th>'; });
+  h += '</tr>';
+  var pts = { jQuery: [], Vanilla: [] };
+  ns.forEach(function (n) {
+    h += '<tr><td>' + n + '</td>';
+    VARS.forEach(function (v) {
+      var r = runsOf(log, v, n), a = avg(r);
+      for (var i = 0; i < RUNS; i++) h += '<td>' + (r[i] === undefined ? '' : r[i]) + '</td>';
+      h += '<td><b>' + a + '</b></td>';
+      pts[v].push(a);
+    });
+    h += '</tr>';
+  });
+  document.getElementById('tbl').innerHTML = h + '</table>';
+  drawChart(ns, pts);
+}
+function drawChart(ns, pts) {
+  var W = 640, H = 280, L = 56, B = 36, T = 16, R = 16, max = 1;
+  VARS.forEach(function (v) { pts[v].forEach(function (x) { if (x !== '' && x > max) max = x; }); });
+  var pw = W - L - R, ph = H - T - B, colors = { jQuery: '#c0392b', Vanilla: '#2471a3' };
+  function X(i) { return L + (ns.length < 2 ? pw / 2 : i * pw / (ns.length - 1)); }
+  function Y(v) { return T + ph - v / max * ph; }
+  var s = '<svg width="' + W + '" height="' + H + '" style="font:12px Arial;border:1px solid #ccc">';
+  s += '<line x1="' + L + '" y1="' + (T + ph) + '" x2="' + (W - R) + '" y2="' + (T + ph) + '" stroke="#333"/><line x1="' + L + '" y1="' + T + '" x2="' + L + '" y2="' + (T + ph) + '" stroke="#333"/>';
+  for (var k = 0; k <= 4; k++) { var yv = max * k / 4; s += '<text x="' + (L - 6) + '" y="' + (Y(yv) + 4) + '" text-anchor="end">' + Math.round(yv) + '</text>'; }
+  ns.forEach(function (n, i) { s += '<text x="' + X(i) + '" y="' + (H - B + 16) + '" text-anchor="middle">' + n + '</text>'; });
+  s += '<text x="' + (L + pw / 2) + '" y="' + (H - 4) + '" text-anchor="middle">Количество новостей</text>';
+  VARS.forEach(function (v, vi) {
+    var d = [];
+    pts[v].forEach(function (y, i) { if (y !== '') { d.push(X(i) + ',' + Y(y)); s += '<circle cx="' + X(i) + '" cy="' + Y(y) + '" r="3" fill="' + colors[v] + '"/>'; } });
+    s += '<polyline fill="none" stroke="' + colors[v] + '" stroke-width="2" points="' + d.join(' ') + '"/>';
+    s += '<text x="' + (W - R - 110) + '" y="' + (T + 14 + vi * 16) + '" fill="' + colors[v] + '">' + (v === 'Vanilla' ? '— без jQuery' : '— jQuery') + '</text>';
+  });
+  document.getElementById('chart').innerHTML = s + '</svg><div style="font-size:12px;color:#555">Среднее время до конца отображения, мс</div>';
+}
+document.getElementById('cj').onclick = function () { copyText(tsv(matrix(readLog(), 'jQuery', NS))); };
+document.getElementById('cv').onclick = function () { copyText(tsv(matrix(readLog(), 'Vanilla', NS))); };
+document.getElementById('csv').onclick = function () {
+  var log = readLog(), b = new Blob([csv(log, allNs(log))], { type: 'text/csv;charset=utf-8' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'results.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+};
+document.getElementById('ser').onclick = function () {
+  var q = [];
+  NS.forEach(function (n) { for (var i = 0; i < RUNS; i++) { q.push('index_jquery.html?n=' + n); q.push('index.html?n=' + n); } });
+  q.push('results.html');
+  var first = q.shift();
+  try { sessionStorage.setItem('queue', JSON.stringify(q)); } catch (e) { alert('sessionStorage недоступен'); return; }
+  location.href = first;
+};
+document.getElementById('stop').onclick = function () { try { sessionStorage.removeItem('queue'); } catch (e) {} msg('Серия остановлена'); };
+document.getElementById('clr').onclick = function () {
+  if (confirm('Удалить все замеры?')) { try { localStorage.removeItem('runs'); } catch (e) {} render(); }
+};
+render();
+</script>
+</body>
+</html>
