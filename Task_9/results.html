@@ -25,13 +25,7 @@ button{margin:2px 4px 2px 0;padding:5px 10px}
   <br><button id="ser">▶ Запустить серию: все размеры × 5 раз × 2 варианта</button>
   <button id="stop">Остановить серию</button><span id="msg"></span>
 </div>
-<p><label><input type="checkbox" id="flt" checked> исключать замеры без ограничения сети (TTFB страницы меньше</label>
-<input type="number" id="thr" value="300" style="width:60px"> мс)</p>
-<p id="stat" style="font-weight:bold"></p>
-<div id="tbl"></div>
-<div id="chart"></div>
 <script>
-// ===PURE===
 var NS = [10, 25, 50, 100, 150, 200], RUNS = 5, VARS = ['jQuery', 'Vanilla'];
 function readLog() { try { return JSON.parse(localStorage.getItem('runs') || '[]'); } catch (e) { return []; } }
 var FILTER = { on: true, min: 300 };
