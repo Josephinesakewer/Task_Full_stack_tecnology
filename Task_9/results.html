@@ -14,21 +14,19 @@ button{margin:2px 4px 2px 0;padding:5px 10px}
 </head>
 <body>
 <h2>Результаты замеров</h2>
-<p><b>Важно:</b> открытые DevTools с ограничением сети и «Disable cache» держите открытыми во время серии. Серия идёт в этой же вкладке и занимает несколько минут.</p>
-<p>Замеры сохраняются автоматически при каждой загрузке <code>index.html</code> / <code>index_jquery.html</code> (последние 5 на пару «вариант × размер»).
-Откройте эту страницу с того же адреса (например, <code>http://localhost:8000/results.html</code>), иначе журнал будет пустым.</p>
+<p><b>Важно:</b> открытые DevTools с ограничением сети и «Disable cache» держать открытыми во время серии. Серия идёт в этой же вкладке и занимает несколько минут.</p>
+<p>Замеры сохраняются автоматически при каждой загрузке <code>index.html</code> / <code>index_jquery.html</code> (последние 5 на пару «вариант × размер»).</p>
 <div>
   <button id="cj">Копировать jQuery → ячейки C6:G11</button>
   <button id="cv">Копировать без jQuery → ячейки I6:M11</button>
   <button id="csv">Скачать CSV для Excel</button>
   <button id="clr">Очистить журнал</button>
-  <br><button id="ser">▶ Запустить серию: все размеры × 5 раз × 2 варианта</button>
+  <br><button id="ser">Запустить серию: все размеры × 5 раз × 2 варианта</button>
   <button id="stop">Остановить серию</button><span id="msg"></span>
 </div>
 <div id="tbl"></div>
 <div id="chart"></div>
 <script>
-// ===PURE===
 var NS = [10, 25, 50, 100, 150, 200], RUNS = 5, VARS = ['jQuery', 'Vanilla'];
 function readLog() { try { return JSON.parse(localStorage.getItem('runs') || '[]'); } catch (e) { return []; } }
 function runsOf(log, v, n) { return log.filter(function (r) { return r.variant === v && r.n === n; }).map(function (r) { return Math.round(r.ms); }).slice(-RUNS); }
@@ -50,8 +48,6 @@ function csv(log, ns) {
   ns.forEach(function (n, i) { lines.push([n].concat(mj[i], mv[i]).join(';')); });
   return '\ufeff' + lines.join('\r\n');
 }
-// ===END===
-
 function msg(t) { var m = document.getElementById('msg'); m.textContent = t; setTimeout(function () { m.textContent = ''; }, 2500); }
 function copyText(t) {
   function fallback() {
