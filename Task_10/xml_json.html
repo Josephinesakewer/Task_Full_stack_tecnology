@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>XML → JSON: конвертер и замер скорости</title>
+<link rel="stylesheet" href="style.css">
+<script src="XMLtoJSONconverter.js"></script>
+</head>
+<body>
+<main>
+  <h1>XML → JSON</h1>
+  <p class="sub">Конвертер и замер скорости в одном окне.</p>
+
+  <div class="tabs" role="tablist">
+    <button type="button" class="active" data-tab="converter" role="tab" aria-selected="true">Конвертер</button>
+    <button type="button" data-tab="bench" role="tab" aria-selected="false">Замер скорости</button>
+  </div>
+
+  <!-- ========== КОНВЕРТЕР ========== -->
+  <section id="sec-converter" class="panel-section active" role="tabpanel">
+    <p class="sub">Вставьте любой корректный XML-документ и нажмите «Конвертировать».</p>
+    <div class="grid">
+      <div>
+        <label for="xml">XML</label>
+        <textarea id="xml" spellcheck="false" placeholder="&lt;root&gt;...&lt;/root&gt;"></textarea>
+      </div>
+      <div>
+        <label for="json">JSON</label>
+        <textarea id="json" spellcheck="false" readonly placeholder="Здесь появится результат"></textarea>
+      </div>
+    </div>
+    <div class="bar">
+      <button class="primary" id="convert" type="button">Конвертировать</button>
+      <button id="example" type="button">Пример</button>
+      <button id="copy" type="button">Копировать JSON</button>
+      <button id="clear" type="button">Очистить</button>
+      <div id="status" role="status"></div>
+    </div>
+  </section>
+
+  <!-- ========== ЗАМЕР СКОРОСТИ ========== -->
+  <section id="sec-bench" class="panel-section" role="tabpanel">
+    <p class="sub">Откройте эту страницу в каждом браузере, запустите замер и перенесите строки в общую таблицу (Excel).</p>
+
+    <div class="panel">
+      <div class="row">
+        <label>Браузер: <input type="text" id="bname" size="14"></label>
+        <label>Версия: <input type="text" id="bver" size="12"></label>
+        <label>ОС: <input type="text" id="bos" size="14"></label>
+        <span class="note">Определено автоматически — при необходимости поправьте (например, Opera GX).</span>
+      </div>
+
+      <h2>Данные</h2>
+      <div class="row" id="sizes"></div>
+      <div class="row">
+        <label>Свой XML-файл: <input type="file" id="file" accept=".xml,text/xml,application/xml"></label>
+      </div>
+      <div class="row" id="custom"></div>
+
+      <div class="row">
+        <label>Повторов на набор: <input type="number" id="runs" value="30" min="5" max="500"></label>
+        <button class="primary" id="run" type="button">Запустить замер</button>
+        <progress id="prog" value="0" max="1" hidden></progress>
+        <span id="bench-status" role="status"></span>
+      </div>
+    </div>
+
+    <h2>Результаты</h2>
+    <div class="scroll"><table id="tbl"></table></div>
+    <div class="row" style="margin-top:12px">
+      <button id="copy-tbl" type="button">Копировать таблицу (для Excel)</button>
+      <button id="reset" type="button">Очистить таблицу</button>
+      <span id="copystat" class="note"></span>
+    </div>
+    <textarea id="tsv" readonly spellcheck="false" placeholder="Здесь появится таблица в виде текста с табуляцией"></textarea>
+
+    <h2>Методика</h2>
+    <p class="note">
+      Измеряются три этапа: парсинг (DOMParser), обход дерева в объект JS (рекурсивная функция) и JSON.stringify.
+      Перед замером выполняется 5 «прогревочных» запусков. Данные генерируются по фиксированному зерну, поэтому во всех
+      браузерах это один и тот же XML — длина JSON в последнем столбце должна совпадать. Для честного сравнения закройте
+      лишние вкладки и DevTools, подключите ноутбук к питанию и повторите замер в каждом браузере несколько раз.
+      Точность таймера в Firefox и Safari может быть ограничена (около 1 мс и грубее), поэтому для малых данных
+      ориентируйтесь на среднее по многим повторам.
+    </p>
+  </section>
+</main>
+
+</body>
+</html>
