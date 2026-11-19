@@ -1,0 +1,198 @@
+// =============================================================
+//  reservations.less — бронирование столика
+// =============================================================
+.reservations {
+    position: relative;
+    padding: 100px 0 101px;
+    background: @c-white;
+    overflow: hidden;
+
+    &__pattern {
+        .pattern-bg(.12);
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    &__inner {
+        .flex-row(space-between, flex-start);
+        position: relative;
+        z-index: @z-content;
+    }
+
+    // ---------- Фотографии ----------
+    &__gallery {
+        .flex-row(flex-start, flex-start);
+        flex: 0 0 auto;
+        padding-top: 30px;
+    }
+
+    &__img {
+        display: block;
+        width: 270px;
+        height: 507px;
+        object-fit: cover;
+    }
+
+    &__img + &__img {
+        margin-left: 30px;
+    }
+
+    // ---------- Правая колонка ----------
+    &__info {
+        .flex-col(flex-start, stretch);
+        flex: 0 0 auto;
+        width: 432px;
+        text-align: center;
+
+        p {
+            font-size: @fs-base;
+            line-height: 1.55;
+            color: @c-text;
+        }
+
+        p + p {
+            margin-top: 16px;
+        }
+
+        .divider {
+            margin: 16px 0 24px;
+        }
+    }
+
+    .on-xl({
+        &__img { width: 220px; height: 420px; }
+        &__info { width: 400px; }
+    });
+
+    .on-lg({
+        padding: 70px 0;
+
+        &__gallery { padding-top: 0; }
+        &__img { width: 180px; height: 350px; }
+        &__info { width: 45%; }
+    });
+
+    .on-md({
+        &__inner {
+            .flex-col(center, center);
+        }
+
+        &__gallery {
+            .flex-row(center, flex-start);
+            margin-bottom: 40px;
+        }
+
+        &__img { width: 46%; height: auto; }
+        &__img + &__img { margin-left: 16px; }
+
+        &__info {
+            width: 100%;
+            max-width: 520px;
+        }
+    });
+}
+
+// ---------- Форма бронирования ----------
+.booking {
+    margin-top: 44px;
+    text-align: left;
+
+    &__row {
+        .flex-row(space-between, flex-start);
+    }
+
+    &__row + &__row {
+        margin-top: 19px;
+    }
+
+    .btn--gold {
+        .flex-center();
+        display: flex;
+        margin: 30px auto 0;
+    }
+
+    .on-sm({
+        &__row {
+            .flex-col(stretch, stretch);
+        }
+
+        &__row + &__row { margin-top: 18px; }
+        .field + .field { margin-top: 18px; }
+    });
+}
+
+// ---------- Поле формы ----------
+.field {
+    position: relative;
+    .flex(0, 0, auto);
+    width: 203px;
+    max-width: 48%;
+
+    &__label {
+        display: block;
+        margin-bottom: 9px;
+        font-size: @fs-small;
+        line-height: 1;
+        font-weight: 700;
+        color: @c-gold;
+    }
+
+    &__input {
+        display: block;
+        width: 100%;
+        height: 39px;
+        padding: 0 15px;
+        font-size: @fs-base;
+        color: @c-text;
+        background: @c-white;
+        border: 1px solid #d8d8d8;
+        border-radius: @radius;
+        outline: none;
+        transition: border-color @transition, box-shadow @transition;
+
+        &::placeholder {
+            color: @c-text-light;
+            font-style: italic;
+        }
+
+        &:focus {
+            border-color: @c-gold;
+            box-shadow: 0 0 0 2px fade(@c-gold, 15%);
+        }
+    }
+
+    // поле с иконкой справа
+    &__input--icon {
+        padding-right: 38px;
+    }
+
+    &__input--select {
+        padding-right: 36px;
+        color: @c-text-light;
+        font-style: italic;
+        appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+
+        option {
+            color: @c-text;
+            font-style: normal;
+        }
+    }
+
+    &__icon {
+        position: absolute;
+        right: 13px;
+        bottom: 12px;
+        font-size: @fs-small;
+        line-height: 1;
+        color: @c-text-light;
+        pointer-events: none;
+    }
+
+    .on-sm({
+        width: 100%;
+        max-width: 100%;
+    });
+}

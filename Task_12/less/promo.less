@@ -1,0 +1,68 @@
+// =============================================================
+//  promo.less — первый экран (hero)
+// =============================================================
+.promo {
+    .flex-center();
+    position: relative;
+    min-height: 1067px;
+    padding: 159px 20px 60px;
+    background-color: @c-dark;
+    background-image: url("../assets/img/hero-bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    overflow: hidden;
+
+    &__content {
+        .flex-col(center, center);
+        width: 100%;
+        max-width: 1000px;
+        text-align: center;
+    }
+
+    &__title {
+        .heading-font(@fs-hero; 1.05);
+        color: @c-white;
+        text-shadow: 0 1px 12px fade(@c-black, 25%);
+    }
+
+    &__buttons {
+        .flex-row(center, center);
+        flex-wrap: wrap;
+        margin-top: 34px;
+    }
+
+    &__buttons .btn + .btn {
+        margin-left: 34px;
+    }
+
+    .on-xl({
+        min-height: 780px;
+
+        &__title { font-size: 72px; }
+    });
+
+    .on-lg({
+        min-height: 620px;
+        padding-top: 120px;
+
+        &__title { font-size: 54px; }
+        &__buttons { margin-top: 26px; }
+    });
+
+    .on-md({
+        min-height: 520px;
+        padding-top: 100px;
+
+        &__title { font-size: 40px; }
+        &__buttons .btn + .btn { margin-left: 0; }
+        &__buttons .btn { margin: 6px; }
+    });
+
+    .on-sm({
+        min-height: 460px;
+        padding-top: 88px;
+
+        &__title { font-size: 30px; }
+    });
+}

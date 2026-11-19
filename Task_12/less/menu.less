@@ -1,0 +1,141 @@
+// =============================================================
+//  menu.less — секция меню (2 колонки × 2 группы)
+// =============================================================
+.menu {
+    position: relative;
+    padding: 106px 0 98px;
+    background: @c-white;
+    overflow: hidden;
+
+    &__pattern {
+        .pattern-bg(.12);
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    &__grid {
+        .flex-row(flex-start, flex-start);
+        gap: 150px;
+        position: relative;
+        z-index: @z-content;
+    }
+
+    &__column {
+        .flex-col(flex-start, stretch);
+        width: 100%;
+        max-width: 458px;
+    }
+}
+
+// ---------- Группа блюд ----------
+.menu-group {
+    & + & {
+        margin-top: 101px;
+    }
+
+    .divider {
+        margin: 22px 0 29px;
+    }
+}
+
+// ---------- Блюдо ----------
+.dish {
+    position: relative;
+    padding: 0 0 12px;
+    border: 1px solid transparent;
+
+    & + & {
+        margin-top: 24px;
+    }
+
+    &__head {
+        .flex-between(flex-end);
+        padding-bottom: 6px;
+        border-bottom: 1px dotted fade(@c-gold, 45%);
+    }
+
+    &__name,
+    &__price {
+        .heading-font(@fs-big; 1.15);
+        color: @c-gold;
+        white-space: nowrap;
+    }
+
+    &__name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__price {
+        margin-left: 16px;
+    }
+
+    &__descr {
+        margin-top: 8px;
+        font-size: @fs-base;
+        line-height: 1.4;
+        color: @c-text;
+    }
+
+    // ---------- Отмеченное блюдо ----------
+    &--special {
+        margin-top: 14px;
+        padding: 6px 18px 14px;
+        border-color: fade(@c-gold, 62%);
+    }
+
+    &__tag {
+        .flex-center();
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        min-width: 73px;
+        min-height: 25px;
+        padding: 2px 10px;
+        font-size: @fs-small;
+        line-height: 1.4;
+        color: @c-white;
+        background: fade(@c-gold, 88%);
+    }
+}
+
+// ---------- Планшет / мобильный ----------
+.menu {
+    .on-lg({
+        padding: 70px 0 70px;
+
+        &__grid {
+            .flex-row(space-between, flex-start);
+            gap: 0;
+        }
+
+        &__column { max-width: 48%; }
+    });
+
+    .on-md({
+        &__grid {
+            .flex-col(center, stretch);
+            gap: 0;
+        }
+
+        &__column {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        &__column + &__column {
+            margin-top: 50px;
+        }
+    });
+
+    .on-sm({
+        padding: 50px 0;
+
+        .menu-group + .menu-group { margin-top: 44px; }
+        .dish + .dish { margin-top: 18px; }
+        .dish__name,
+        .dish__price { font-size: 18px; }
+        .dish__descr { font-size: 15px; }
+    });
+}

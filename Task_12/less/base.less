@@ -1,0 +1,176 @@
+// =============================================================
+//  base.less — сброс, типографика, общие элементы
+// =============================================================
+@import "variables";
+@import "mixins";
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    font-family: @font-body;
+    font-size: @fs-base;
+    line-height: @lh-base;
+    color: @c-text;
+    background: @c-white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &.is-locked {
+        overflow: hidden;
+    }
+}
+
+h1, h2, h3, h4, p, blockquote, figure, ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color @transition, background-color @transition, opacity @transition;
+}
+
+img, svg {
+    .fluid-img();
+}
+
+button, input, select, textarea {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: 0;
+}
+
+// ---------- Контейнер ----------
+.container {
+    width: 100%;
+    max-width: @container + @gutter * 2;
+    margin: 0 auto;
+    padding: 0 @gutter;
+}
+
+// ---------- Общие заголовки ----------
+.title {
+    .heading-font(@fs-h2);
+    text-align: center;
+
+    &--gold { color: @c-gold-text; }
+    &--white { color: @c-white; }
+
+    .on-md({
+        font-size: 28px;
+    });
+}
+
+// ---------- Разделитель с орнаментом ----------
+.divider {
+    .flex-row(center, center);
+    margin: 18px 0;
+
+    &__line {
+        .flex(1, 1, auto);
+        max-width: 90px;
+        height: 1px;
+        background: fade(@c-dark, 25%);
+    }
+
+    &__img {
+        display: block;
+        flex: 0 0 auto;
+        width: auto;
+        height: auto;
+        margin: 0 14px;
+    }
+
+    // на тёмном фоне линии светлее
+    &--light .divider__line { background: fade(@c-white, 30%); }
+    &--hero  .divider__line { background: fade(@c-white, 45%); }
+    &--footer .divider__line { background: fade(@c-white, 12%); }
+
+    .on-md({
+        margin: 14px 0;
+
+        &__img { margin: 0 10px; }
+    });
+}
+
+// ---------- Кнопки ----------
+.btn {
+    .flex-center();
+    .heading-font(@fs-base; 1);
+    display: inline-flex;
+    min-width: 231px;
+    min-height: 60px;
+    padding: 12px 24px;
+    letter-spacing: .04em;
+    text-align: center;
+    color: @c-white;
+    background: transparent;
+    border: 0;
+    transition: background-color @transition, color @transition, border-color @transition;
+
+    &--dark {
+        background: @c-hero-btn-dark;
+
+        &:hover { background: fade(@c-black, 78%); }
+    }
+
+    &--light {
+        background: @c-hero-btn-light;
+
+        &:hover { background: fade(@c-white, 34%); }
+    }
+
+    &--gold {
+        min-height: 39px;
+        min-width: 0;
+        padding: 8px 44px;
+        font-family: @font-body;
+        font-size: @fs-base;
+        letter-spacing: 0;
+        background: @c-gold;
+
+        &:hover { background: @c-gold-dark; }
+    }
+
+    .on-md({
+        min-width: 200px;
+        min-height: 52px;
+    });
+}
+
+// ---------- Секции с паттерном ----------
+.about__pattern,
+.menu__pattern,
+.reservations__pattern {
+    .pattern-bg(.12);
+
+    .on-md({
+        .pattern-bg(.12; 90px 45px);
+    });
+}
+
+// ---------- Секции: отступ для якорных переходов под фиксированной шапкой ----------
+.section {
+    scroll-margin-top: 90px;
+}

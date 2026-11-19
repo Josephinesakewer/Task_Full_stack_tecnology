@@ -1,0 +1,160 @@
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0
+}
+body
+{
+    font-family:Lato,Arial,sans-serif;
+    color:#4c4c4c;
+    line-height:1.5
+}
+.container
+{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 20px
+}
+.header
+{
+    background:#37312f;
+    color:#fff;
+    padding:18px 0
+}
+.header__inner
+{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px
+}
+.logo
+{
+    font-size:26px;
+    font-weight:700;
+    color:#fff;
+    text-decoration:none;
+    letter-spacing:1px
+}
+.nav__list
+{
+    display:flex;
+    gap:22px;
+    list-style:none
+}
+.nav__link
+{
+    color:rgba(255,255,255,.85);
+    text-decoration:none;
+    text-transform:uppercase;
+    font-size:13px;
+    letter-spacing:.5px
+}
+.nav__link--active{color:#c89f2d}
+.promo
+{
+    background:#37312f;
+    color:#fff;
+    text-align:center;
+    padding:90px 20px
+}
+.promo__title
+{
+    font-size:42px;
+    margin-bottom:28px;
+    font-family:Georgia,serif
+}
+.btn
+{
+    display:inline-block;
+    padding:13px 28px;
+    margin:6px;
+    text-decoration:none;
+    text-transform:uppercase;
+    font-weight:700;
+    font-size:13px;
+    border:2px solid
+}
+.btn--dark
+{
+    background:#37312f;
+    color:#fff;
+    border-color:#fff
+}
+.btn--light
+{
+    color:#fff;
+    border-color:#fff;
+    background:transparent
+}
+.title--gold
+{
+    color:#cc9900;
+    text-align:center;
+    margin-bottom:12px
+}
+.divider
+{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin:14px 0 20px
+}
+.divider__line
+{
+    width:70px;
+    height:1px;
+    background:rgba(0,0,0,.18)
+}
+.dish
+{
+    margin-bottom:18px;
+    padding-bottom:14px;
+    border-bottom:1px solid #eee
+}
+.dish--special
+{
+    border:1px solid #c89f2d;
+    padding:14px;
+    background:rgba(200,159,45,.07);
+    border-radius:2px
+}
+.dish__head
+{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:4px
+}
+.dish__name{font-weight:700}
+.dish__price{color:#c89f2d;font-weight:700}
+.dish__tag
+{
+    display:inline-block;
+    background:#c89f2d;
+    color:#fff;
+    font-size:11px;
+    padding:2px 9px;
+    margin-bottom:8px;
+    text-transform:uppercase
+}
+.footer
+{
+    background:#191919;
+    color:#bbb;
+    padding:50px 0;
+    margin-top:40px
+}
+.footer__inner
+{
+    display:flex;
+    gap:50px;
+    flex-wrap:wrap
+}
+.footer__title
+{
+    color:#fff;
+    margin-bottom:8px
+}
+.about,.menu{padding:60px 0}
+.section{position:relative}

@@ -1,0 +1,15 @@
+{
+  "name": "lambda-restaurant",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Вёрстка макета Lambda (18.psd): flexbox + Less + адаптив",
+  "scripts": {
+    "build": "lessc --clean-css=\"--s1 --advanced\" less/style.less css/style.css",
+    "build:dev": "lessc less/style.less css/style.css",
+    "watch": "lessc --watch less/style.less css/style.css"
+  },
+  "devDependencies": {
+    "less": "^4.9.1",
+    "less-plugin-clean-css": "^1.6.0"
+  }
+}
