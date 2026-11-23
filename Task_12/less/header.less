@@ -1,0 +1,214 @@
+// =============================================================
+//  header.less — фиксированная шапка
+// =============================================================
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: @z-header;
+    .flex-row(center, center);
+    min-height: 159px;
+
+    &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 159px;
+        background: linear-gradient(to bottom,
+            fade(@c-black, 58%) 0%,
+            fade(@c-black, 26%) 50%,
+            fade(@c-black, 2%) 100%);
+        pointer-events: none;
+    }
+
+    &__inner {
+        .flex-between(center);
+        position: relative;
+        z-index: @z-content;
+        max-width: none;
+        padding: 0 178px;
+    }
+
+    // фиксированное положение «прилипания»
+    &.is-scrolled &__overlay {
+        height: 90px;
+        background: fade(@c-black, 82%);
+    }
+
+    .on-xl({
+        &__inner { padding: 0 40px; }
+        min-height: 120px;
+    });
+
+    .on-lg({
+        min-height: 80px;
+
+        &__overlay { height: 80px; background: fade(@c-black, 78%); }
+        &__inner { padding: 0 20px; }
+    });
+}
+
+// ---------- Логотип (текстовый, шрифт Yeseva One — как в макете) ----------
+.logo {
+    .heading-font(46px; 1);
+    .flex(0, 0, auto);
+    display: block;
+    color: @c-black;
+    letter-spacing: .015em;
+    text-shadow: 0 0 6px fade(@c-white, 35%);
+
+    &:hover { color: @c-gold-dark; }
+
+    .on-lg({
+        font-size: 32px;
+    });
+
+    .on-sm({
+        font-size: 24px;
+    });
+}
+
+// ---------- Навигация ----------
+.nav {
+    margin-left: auto;
+    margin-right: 42px;
+
+    &__list {
+        .flex-row(center, center);
+        flex-wrap: wrap;
+    }
+
+    &__item + &__item {
+        margin-left: 34px;
+    }
+
+    &__link {
+        position: relative;
+        display: block;
+        padding: 8px 0;
+        font-family: @font-body;
+        font-size: @fs-h3;
+        font-weight: 500;
+        line-height: 1.1;
+        color: @c-white;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: -58px;
+            left: 0;
+            width: 82px;
+            height: 3px;
+            background: fade(@c-white, 71%);
+            opacity: 0;
+            transition: opacity @transition;
+        }
+
+        &:hover {
+            color: @c-gold;
+
+            &::before { opacity: .6; }
+        }
+
+        &--active::before { opacity: 1; }
+    }
+
+    .on-lg({
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 280px;
+        max-width: 84vw;
+        margin: 0;
+        padding: 96px 28px 28px;
+        background: fade(#16130f, 97%);
+        transform: translateX(100%);
+        transition: transform .3s ease;
+        overflow-y: auto;
+
+        &.is-open { transform: translateX(0); }
+
+        &__list {
+            .flex-col(flex-start, stretch);
+        }
+
+        &__item + &__item { margin: 0; }
+
+        &__link {
+            padding: 16px 0;
+            border-bottom: 1px solid fade(@c-white, 10%);
+
+            &::before { display: none; }
+            &--active { color: @c-gold; }
+        }
+    });
+}
+
+// ---------- Иконки соцсетей ----------
+.social {
+    .flex-row(flex-start, center);
+
+    &__link {
+        .flex-center();
+        width: 28px;
+        height: 28px;
+        font-size: @fs-h3;
+        color: @c-gold;
+
+        &:hover { color: @c-white; }
+    }
+
+    &__item + &__item,
+    li + li { margin-left: 6px; }
+
+    &--header {
+        .flex(0, 0, auto);
+    }
+
+    &--footer {
+        justify-content: center;
+        margin-top: 22px;
+
+        .social__link {
+            color: @c-white;
+            font-size: @fs-btn;
+
+            &:hover { color: @c-gold; }
+        }
+
+        li + li { margin-left: 14px; }
+    }
+}
+
+// ---------- Бургер ----------
+.burger {
+    display: none;
+    position: relative;
+    z-index: @z-content;
+    width: 40px;
+    height: 32px;
+    padding: 0;
+    margin-left: 16px;
+
+    &__line {
+        display: block;
+        width: 100%;
+        height: 2px;
+        margin: 6px 0;
+        background: @c-white;
+        transition: transform @transition, opacity @transition;
+    }
+
+    .on-lg({
+        display: block;
+
+        &.is-active {
+            .burger__line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .burger__line:nth-child(2) { opacity: 0; }
+            .burger__line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
+    });
+}

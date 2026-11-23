@@ -1,0 +1,110 @@
+// =============================================================
+//  about.less — секция «Just the right food»
+// =============================================================
+.about {
+    position: relative;
+    padding: 55px 0 0;
+    background: @c-white;
+    overflow: hidden;
+
+    &__pattern {
+        .pattern-bg(.12);
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    &__inner {
+        .flex-row(flex-start, flex-start);
+        position: relative;
+        z-index: @z-content;
+    }
+
+    // ---------- Текстовая колонка ----------
+    &__text {
+        .flex(0, 0, auto);
+        width: 406px;
+        margin-top: 51px;
+        padding-bottom: 84px;
+        text-align: center;
+
+        p {
+            font-size: @fs-base;
+            line-height: 1.55;
+            color: @c-text;
+        }
+    }
+
+    // ---------- Фото блюда ----------
+    &__picture {
+        .flex(1, 1, auto);
+        margin-top: -55px;
+        margin-left: 30px;
+        text-align: right;
+    }
+
+    &__dish {
+        display: block;
+        width: 531px;
+        max-width: 100%;
+        height: auto;
+        margin-left: auto;
+    }
+
+    // ---------- Фото повара (круглое) ----------
+    &__photos {
+        .flex-row(center, center);
+        margin-top: 52px;
+    }
+
+    &__cook {
+        width: 190px;
+        height: auto;
+        border-radius: 50%;
+    }
+
+    .on-xl({
+        &__text { width: 44%; }
+        &__picture { margin-top: -30px; }
+        &__dish { width: 100%; }
+    });
+
+    .on-lg({
+        padding-top: 40px;
+
+        &__text {
+            width: 44%;
+            margin-top: 30px;
+            padding-bottom: 50px;
+        }
+
+        &__picture { margin-top: -20px; margin-left: 20px; }
+        &__cook { width: 150px; }
+        &__photos { margin-top: 34px; }
+    });
+
+    .on-md({
+        &__inner {
+            .flex-col(center, center);
+        }
+
+        &__text {
+            width: 100%;
+            max-width: 520px;
+            margin-top: 0;
+            padding-bottom: 30px;
+            order: 2;
+        }
+
+        &__picture {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto 30px;
+            text-align: center;
+            order: 1;
+        }
+
+        &__dish { margin: 0 auto; }
+        &__cook { width: 130px; }
+    });
+}

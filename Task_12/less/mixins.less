@@ -1,0 +1,94 @@
+// =============================================================
+//  mixins.less — flex-хелперы, адаптив, декор
+// =============================================================
+
+// ---------- Flexbox ----------
+.flex-row(@justify: flex-start; @align: stretch) {
+    display: flex;
+    flex-direction: row;
+    justify-content: @justify;
+    align-items: @align;
+}
+
+.flex-col(@justify: flex-start; @align: stretch) {
+    display: flex;
+    flex-direction: column;
+    justify-content: @justify;
+    align-items: @align;
+}
+
+.flex-center() {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between(@align: center) {
+    display: flex;
+    align-items: @align;
+    justify-content: space-between;
+}
+
+.flex-wrap(@justify: flex-start; @align: stretch) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: @justify;
+    align-items: @align;
+}
+
+// flex-сокращения
+.flex(@grow: 0; @shrink: 1; @basis: auto) {
+    flex: @grow @shrink @basis;
+}
+
+// ---------- Адаптив (mobile-last: max-width) ----------
+.on-xl(@rules) { @media (max-width: @bp-xl) { @rules(); } }
+.on-lg(@rules) { @media (max-width: @bp-lg) { @rules(); } }
+.on-md(@rules) { @media (max-width: @bp-md) { @rules(); } }
+.on-sm(@rules) { @media (max-width: @bp-sm) { @rules(); } }
+
+// ---------- Декор ----------
+.cover-bg(@pos: center) {
+    background-repeat: no-repeat;
+    background-position: @pos;
+    background-size: cover;
+}
+
+.fluid-img() {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+// Тонкая золотая линия под названием блюда
+.hairline(@color: fade(@c-gold, 45%)) {
+    border-bottom: 1px solid @color;
+}
+
+// «Плавный» шрифт для заголовков
+.heading-font(@size; @lh: 1.2) {
+    font-family: @font-heading;
+    font-size: @size;
+    font-weight: 400;
+    line-height: @lh;
+}
+
+// Паттерн «ар-деко» (волны): SVG в data-URI, тонкие концентрические дуги
+.pattern-bg(@stroke-opacity: .12; @size: 113px 56.5px) {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='113' height='56.5' viewBox='0 0 113 56.5'%3E%3Cg fill='none' stroke='%2337312f' stroke-opacity='@{stroke-opacity}' stroke-width='3'%3E%3Cpath d='M0 56.5a28.25 28.25 0 0 1 56.5 0M0 56.5a56.5 56.5 0 0 1 113 0M113 56.5a28.25 28.25 0 0 0-56.5 0M56.5 56.5A28.25 28.25 0 0 0 0 28.25M56.5 56.5A56.5 56.5 0 0 0 113 28.25M56.5 56.5a28.25 28.25 0 0 1-56.5 0'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: @size;
+}
+
+// Скрытый, но доступный текст
+.visually-hidden() {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}

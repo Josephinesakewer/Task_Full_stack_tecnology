@@ -1,0 +1,110 @@
+// =============================================================
+//  reviews.less — секция отзывов
+// =============================================================
+.reviews {
+    .flex-center();
+    position: relative;
+    min-height: 1000px;
+    padding: 60px 20px;
+    background-color: @c-dark;
+    background-image: url("../assets/img/reviews-bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    &__box {
+        .flex-col(center, center);
+        width: 774px;
+        max-width: 100%;
+        min-height: 520px;
+        padding: 52px 40px 60px;
+        text-align: center;
+        background: @c-box-dark-2;
+    }
+
+    .divider {
+        margin: 20px 0 34px;
+    }
+}
+
+// ---------- Цитата ----------
+.review {
+    position: relative;
+    max-width: 625px;
+    padding-left: 43px;
+    text-align: left;
+
+    &::before {
+        content: "“";
+        position: absolute;
+        top: -18px;
+        left: 0;
+        font-family: @font-heading;
+        font-size: 96px;
+        line-height: 1;
+        color: #f2f3f3;
+        pointer-events: none;
+    }
+
+    &__text {
+        .heading-font(@fs-lead; 1.8);
+        color: #dee0df;
+    }
+
+    &__author {
+        margin-top: 26px;
+        font-size: @fs-base;
+        text-align: center;
+        color: @c-white;
+    }
+
+    .on-xl({
+        &__text { font-size: 21px; line-height: 1.7; }
+    });
+
+    .on-lg({
+        padding-left: 34px;
+
+        &::before { font-size: 74px; top: -12px; }
+        &__text { font-size: 18px; }
+    });
+
+    .on-md({
+        padding-left: 26px;
+        text-align: left;
+
+        &::before { font-size: 56px; }
+        &__text { font-size: 16px; line-height: 1.6; }
+        &__author { margin-top: 18px; font-size: 15px; }
+    });
+}
+
+.reviews {
+    .on-xl({
+        min-height: 860px;
+    });
+
+    .on-lg({
+        min-height: 640px;
+        padding: 50px 20px;
+
+        &__box {
+            width: 660px;
+            min-height: auto;
+            padding: 44px 30px 50px;
+        }
+    });
+
+    .on-md({
+        min-height: 0;
+        padding: 40px 15px;
+
+        &__box {
+            width: 100%;
+            max-width: 560px;
+            padding: 32px 20px 36px;
+        }
+
+        .divider { margin: 14px 0 24px; }
+    });
+}
