@@ -1,0 +1,83 @@
+// =============================================================
+//  ingredients.less — тёмная секция «Fine ingredients»
+// =============================================================
+.ingredients {
+    .flex-center();
+    position: relative;
+    min-height: 1068px;
+    padding: 40px 20px;
+    background-color: @c-dark;
+    background-image: url("../assets/img/ingredients-bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+
+    &__box {
+        .flex-col(center, center);
+        width: 574px;
+        max-width: 100%;
+        min-height: 560px;
+        padding: 68px 30px 60px;
+        text-align: center;
+        background: @c-box-dark;
+    }
+
+    &__descr {
+        max-width: 420px;
+        margin: 0 auto;
+        font-size: @fs-base;
+        line-height: 1.55;
+        color: @c-white;
+    }
+
+    // ---------- Круглые фото ингредиентов ----------
+    &__list {
+        .flex-row(center, center);
+        flex-wrap: wrap;
+        margin-top: 46px;
+    }
+
+    &__item + &__item {
+        margin-left: 47px;
+    }
+
+    &__img {
+        display: block;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .on-lg({
+        min-height: 720px;
+
+        &__box {
+            width: 520px;
+            min-height: auto;
+            padding: 50px 24px 44px;
+        }
+
+        &__item + &__item { margin-left: 32px; }
+    });
+
+    .on-md({
+        min-height: 0;
+        padding: 40px 15px;
+
+        &__box {
+            width: 100%;
+            max-width: 520px;
+            padding: 40px 20px 36px;
+        }
+
+        &__list { margin-top: 32px; }
+        &__item + &__item { margin-left: 20px; }
+        &__img { width: 78px; height: 78px; }
+    });
+
+    .on-sm({
+        &__img { width: 64px; height: 64px; }
+        &__item + &__item { margin-left: 14px; }
+    });
+}

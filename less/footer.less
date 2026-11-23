@@ -1,0 +1,76 @@
+// =============================================================
+//  footer.less — подвал
+// =============================================================
+.footer {
+    padding: 63px 0 72px;
+    background: @c-footer-bg;
+    color: @c-white;
+
+    &__inner {
+        .flex-row(space-between, flex-start);
+    }
+
+    &__col {
+        .flex-col(flex-start, center);
+        width: 343px;
+        max-width: 30%;
+        text-align: center;
+    }
+
+    &__title {
+        .heading-font(@fs-h3; 1.1);
+        color: @c-white;
+    }
+
+    &__text {
+        font-size: @fs-base;
+        line-height: 1.5;
+        color: @c-white;
+
+        strong { font-weight: 700; }
+    }
+
+    .divider {
+        margin: 16px 0 44px;
+
+        &__img { opacity: .9; }
+        &__line { max-width: 60px; }
+    }
+
+    .on-lg({
+        padding: 50px 0;
+
+        &__col { max-width: 32%; }
+        &__text { font-size: 15px; }
+
+        .divider { margin: 14px 0 30px; }
+    });
+
+    .on-md({
+        &__inner {
+            .flex-col(center, center);
+        }
+
+        &__col {
+            width: 100%;
+            max-width: 420px;
+        }
+
+        &__col + &__col { margin-top: 40px; }
+    });
+}
+
+// ---------- Платёжные системы ----------
+.payments {
+    .flex-row(center, center);
+    flex-wrap: wrap;
+    margin-top: 22px;
+
+    &__item {
+        .flex-center();
+        font-size: 22px;
+        color: @c-white;
+
+        & + & { margin-left: 16px; }
+    }
+}

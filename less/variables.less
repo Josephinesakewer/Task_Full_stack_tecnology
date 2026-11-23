@@ -1,0 +1,51 @@
+// =============================================================
+//  variables.less — дизайн-токены макета Lambda (1600×5000)
+// =============================================================
+
+// ---------- Цвета ----------
+@c-gold:            #c89f2d;   // акцент: заголовки, цены, кнопки
+@c-gold-text:       #cc9900;   // золото заголовков на светлом фоне
+@c-gold-dark:       #b8901f;   // hover акцента
+@c-dark:            #37312f;   // основной тёмный (паттерн, бордеры)
+@c-text:            #4c4c4c;   // основной текст
+@c-text-light:      #7c7c7c;   // плейсхолдеры, подписи
+@c-footer-bg:       #191919;   // фон подвала
+@c-white:           #ffffff;
+@c-black:           #000000;
+
+@c-hero-overlay:    fade(@c-black, 35%);   // затемнение фото в hero
+@c-hero-btn-dark:   fade(@c-black, 56%);   // «BOOK A TABLE»
+@c-hero-btn-light:  fade(@c-white, 19%);   // «SEE THE MENU»
+@c-box-dark:        fade(@c-black, 46%);   // плашка «Fine ingredients»
+@c-box-dark-2:      fade(@c-black, 56%);   // плашка «Guest Reviews»
+
+// ---------- Типографика ----------
+@font-heading: "Yeseva One", "Times New Roman", serif;
+@font-body:    "Lato", "Helvetica Neue", Arial, sans-serif;
+
+@fs-hero:   90px;   // промо-заголовок
+@fs-h2:     36px;   // заголовки секций
+@fs-h3:     21px;   // заголовки колонок подвала
+@fs-lead:   25px;   // цитата в отзывах
+@fs-big:    21px;   // названия блюд
+@fs-btn:    18px;   // текст кнопок
+@fs-base:   16px;   // основной текст
+@fs-small:  14px;   // подписи полей, тег Special
+@fs-tiny:   12px;
+
+@lh-base:   1.5;
+
+// ---------- Сетка ----------
+@container:      1170px;   // контентная колонка (215..1385 в макете)
+@gutter:         15px;
+@bp-xl:          1200px;
+@bp-lg:          992px;
+@bp-md:          768px;
+@bp-sm:          576px;
+
+// ---------- Прочее ----------
+@radius:        0;
+@transition:    .25s ease;
+@z-header:      100;
+@z-overlay:     1;
+@z-content:     2;
